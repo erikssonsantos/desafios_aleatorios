@@ -37,13 +37,14 @@ class Jogo:
 	def mostrar_opcoes(self, escolhida1=None, escolhida2=None):
         
 		for i in range(self.numero_de_opcoes):
-			if escolha1 and escolha1 == i:
-				print(self.cartas[escolha1], end=' ')
+			if escolhida1 and escolhida1 == i:
+				print(self.cartas[escolhida1], end=' ')
 				continue
-			if escolha2 and escolha2 == i:
-				print(self.cartas[escolha2], end=' ')
+			if escolhida2 and escolhida2 == i:
+				print(self.cartas[escolhida2], end=' ')
 				continue
 			print('*', end=' ')
+		print()
 		
 	def fim(self):
 		return
