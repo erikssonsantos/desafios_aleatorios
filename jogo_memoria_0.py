@@ -1,14 +1,17 @@
-from random import randint
+"""Jogo da memória"""
 
 
 class Jogo:
     
     def __init__(self):
         
-        self.loop_do_jogo = True
+        from random import randint
+        from random import shuffle
+        self.inloop = True
         self.numero_de_opcoes = 10
         self.cartas = [randint(1, 1000) for i in range(self.numero_de_opcoes // 2)]
         self.cartas += self.cartas
+        shuffle(self.cartas)
         self.carta1 = None
         self.carta2 = None
         self.indice_carta1 = None
@@ -33,6 +36,7 @@ class Jogo:
             return False
             
     def mostrar_opcoes(self, escolhida1=None, escolhida2=None):
+
         print()
         for i in range(0, self.numero_de_opcoes):
             if i in self.cartas_encontradas:
@@ -49,36 +53,53 @@ class Jogo:
         print()
         
     def fim(self):
-        print('Jogo finalizado!')
 
-
-jogo = Jogo()
-
-vez = 2
-escolhida1 = None
-escolhida2 = None
-while jogo.loop_do_jogo:
+        import sys
+        sys.exit('Jogo finalizado! :)')
     
-    if vez == 1: 
+    def loop_do_jogo(self):
+
         vez = 2
-    elif vez == 2:
-        vez = 1
-    
-    jogo.mostrar_opcoes(escolhida1, escolhida2)
-    
-    if vez == 1:
-        escolhida1 = int(input('Escolha a primeira opção: '))
-    if vez == 2:
-        while True:
-            escolhida2 = int(input('Escolha a segunda opção: '))
-            if escolhida2 == escolhida1:
-                print('Você á escolheu esssa opção!')
-            else:
-                break
-        if jogo.comparar_cartas(jogo.cartas[escolhida1], jogo.cartas[escolhida2]):
-            jogo.cartas_encontradas.append(escolhida1)
-            jogo.cartas_encontradas.append(escolhida2)
-            escolhida1 = None
-            escolhida1 = None
+        escolhida1 = None
+        escolhida2 = None
+        self.mostrar_opcoes(escolhida1, escolhida2)
+        while self.inloop:
+            
+            if vez == 1: 
+                vez = 2
+            elif vez == 2:
+                vez = 1
+            
+            if vez == 1:
+                escolhida1 = int(input('Escolha a primeira opção: '))
+                self.mostrar_opcoes(escolhida1, escolhida2)
+            if vez == 2:
+                while True:
+                    escolhida2 = int(input('Escolha a segunda opção: '))
+                    if escolhida2 == escolhida1:
+                        print('Você já escolheu esssa opção!')
+                    else:
+                        break
+                if self.comparar_cartas(self.cartas[escolhida1], self.cartas[escolhida2]):
+                    print('Par encontrado! Parabéns!')
+                    self.cartas_encontradas.append(escolhida1)
+                    self.cartas_encontradas.append(escolhida2)
+                    if len(self.cartas_encontradas) == self.numero_de_opcoes:
+                        print('Você venceu!')
+                        break
+                else:
+                    print('Não combinou! Tente novamente')
+                    self.mostrar_opcoes(escolhida1, escolhida2)
+                    escolhida1 = None
+                    escolhida2 = None
+                    self.mostrar_opcoes(escolhida1, escolhida2)
+                    continue
+                self.mostrar_opcoes(escolhida1, escolhida2)
+                escolhida1 = None
+                escolhida2 = None
 
-jogo.fim()
+
+if __name__ == '__main__':
+    jogo = Jogo()
+    jogo.loop_do_jogo()
+    jogo.fim()
