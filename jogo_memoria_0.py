@@ -57,7 +57,7 @@ class Jogo:
         import sys
         sys.exit('Jogo finalizado! :)')
     
-    def loop_do_jogo(self):
+    def play(self):
 
         vez = 2
         escolhida1 = None
@@ -86,7 +86,7 @@ class Jogo:
                     self.cartas_encontradas.append(escolhida2)
                     if len(self.cartas_encontradas) == self.numero_de_opcoes:
                         print('Você venceu!')
-                        break
+                        self.inloop = False
                 else:
                     print('Não combinou! Tente novamente')
                     self.mostrar_opcoes(escolhida1, escolhida2)
@@ -101,5 +101,5 @@ class Jogo:
 
 if __name__ == '__main__':
     jogo = Jogo()
-    jogo.loop_do_jogo()
+    jogo.play()
     jogo.fim()
