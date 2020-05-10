@@ -97,50 +97,57 @@ def nextprime(numero: int, /) -> int:
 
 
 def mdc(param_numeros: list):
-
-    numeros_temp = []
+    
     fator = nextprime(1)
-    isfator = False
     fatores = []
-    candidatos_mdc = []
-    quandidade_de_dividendos = 0
-
-    while sum(param_numeros) != len(param_numeros):
-
-        for i in param_numeros:
-            if i % fator == 0:
-                numeros_temp.append(i // fator)
-                isfator = True
-                quandidade_de_dividendos += 1
-            else:
-                numeros_temp.append(i)
-        else:
-            if quandidade_de_dividendos == len(param_numeros):
-                candidatos_mdc.append(fator)
-            quandidade_de_dividendos = 0
-            if isfator:
-                fatores.append(fator)
-                isfator = False
+    quantidade_de_numeros = len(param_numeros)
+    numero_temp = None
+    fatores_temp = []
+    
+    for i in range(quantidade_de_numeros):
+        numero_temp = param_numeros[i]
+        while numero_temp != 1:
+            if numero_temp % fator == 0:
+                fatores_temp.append(fator)
+                numero_temp //= fator
             else:
                 fator = nextprime(fator)
-
-        param_numeros = numeros_temp.copy()
-        numeros_temp.clear()
+        fatores.append(fatores_temp.copy())
+        fatores_temp.clear()
+        fator = nextprime(1)
     else:
-        candidato_mdc_vencedor = min(candidatos_mdc)
-        quandidade_de_repeticoes_do_vencedor = candidatos_mdc.count(candidato_mdc_vencedor)
-        mdc_ = candidato_mdc_vencedor ** quandidade_de_repeticoes_do_vencedor
-        return mdc_
+        fatores_usados_primeiro_numero = tuple(set(fatores[0]))
+        fatores_comuns = []
+        ocorrencia_de_fator = 0
+        expoentes = []
+        for ii in range(len(fatores_usados_primeiro_numero)):
+            for iii in fatores:
+                if fatores_usados_primeiro_numero[ii] in iii:
+                    ocorrencia_de_fator += 1
+                    expoentes.append(iii.count(fatores_usados_primeiro_numero[ii]))
+            if ocorrencia_de_fator == quantidade_de_numeros:
+                fatores_comuns.append((fatores_usados_primeiro_numero[ii], min(expoentes)))
+            ocorrencia_de_fator = 0
+            expoentes.clear()
+        else:
+            produto_dos_fatores_comuns = 1
+            for iv in fatores_comuns:
+                produto_dos_fatores_comuns *= iv[0] ** iv[1]
+            else:
+                return produto_dos_fatores_comuns
 
 
 def mmc(param_numeros: list):
-
+    
+    mmc_ = 1
     numeros_temp = []
     fator = nextprime(1)
     isfator = False
     fatores = []
-
-    while sum(param_numeros) != len(param_numeros):
+    quantidade_de_parametros = len(param_numeros)
+    soma_dos_parametros = sum(param_numeros)
+    
+    while soma_dos_parametros != quantidade_de_parametros:
         for i in param_numeros:
             if i % fator == 0:
                 numeros_temp.append(i // fator)
@@ -155,8 +162,8 @@ def mmc(param_numeros: list):
                 fator = nextprime(fator)
         param_numeros = numeros_temp.copy()
         numeros_temp.clear()
+        soma_dos_parametros = sum(param_numeros)
     else:
-        mmc_ = 1
         for fator in fatores:
             mmc_ *= fator
         return mmc_
