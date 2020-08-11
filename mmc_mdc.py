@@ -8,7 +8,7 @@ Created on Fri May  8 14:21:02 2020
 
 
 def kprimes(comeco_intervalo: int, fim_intervalo: int, /, *, next_prime: bool = False):
-    
+
     primo: bool = True
 
     if comeco_intervalo <= 2:
@@ -86,7 +86,7 @@ def isprime(numero: int, /) -> bool:
 
 
 def nextprime(numero: int, /) -> int:
-    
+
     if not isinstance(numero, int):
         raise TypeError
 
@@ -97,13 +97,13 @@ def nextprime(numero: int, /) -> int:
 
 
 def mdc(param_numeros: list):
-    
+
     fator = nextprime(1)
     fatores = []
     quantidade_de_numeros = len(param_numeros)
     numero_temp = None
     fatores_temp = []
-    
+
     for i in range(quantidade_de_numeros):
         numero_temp = param_numeros[i]
         while numero_temp != 1:
@@ -138,7 +138,7 @@ def mdc(param_numeros: list):
 
 
 def mmc(param_numeros: list):
-    
+
     mmc_ = 1
     numeros_temp = []
     fator = nextprime(1)
@@ -146,7 +146,7 @@ def mmc(param_numeros: list):
     fatores = []
     quantidade_de_parametros = len(param_numeros)
     soma_dos_parametros = sum(param_numeros)
-    
+
     while soma_dos_parametros != quantidade_de_parametros:
         for i in param_numeros:
             if i % fator == 0:

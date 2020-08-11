@@ -3,10 +3,10 @@ expressao = input('Digite a expressão: ').strip()
 quant_parenteses_abrir = expressao.count('(')
 quant_parenteses_fechar = expressao.count(')')
 parenteses_para_fechar = 0
-distancia_entre_parenteses = 0 # Para verificar a quantidade de caracteres dentro
+distancia_entre_parenteses = 0  # Para verificar a quantidade de caracteres dentro
 # dos parentese: erro se a distância entre o a abertura e o fechamento for 1
-diferenca = 0 # vai guardar a diferença na quantidade de tipos de parênteses
-erros = [] # lista que vai guardar todos os erros previstos e interceptados
+diferenca = 0  # vai guardar a diferença na quantidade de tipos de parênteses
+erros = []  # lista que vai guardar todos os erros previstos e interceptados
 validade = True
 
 
@@ -52,9 +52,9 @@ else:
 
 
 # Condicional de impressão
-if validade == True:
+if validade:
     print(f'A expressão {expressao} está válida!')
 else:
     print(f'A expressão {expressao} está errada!')
-    for erro in erros: # for para printar os erros acumulados na lista de erros
+    for erro in erros:  # for para printar os erros acumulados na lista de erros
         print(erro)
