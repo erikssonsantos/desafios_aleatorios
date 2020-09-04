@@ -24,7 +24,7 @@ else:
 lista = listar(pasta_alvo)
 
 
-def mudar_nome(tipo_nome, lista_de_arquivos):
+def mudar_nome(lista_de_arquivos):
 
     for arquivo in lista_de_arquivos:
         extensao = None
@@ -48,5 +48,5 @@ def mudar_nome(tipo_nome, lista_de_arquivos):
     numero = 1
 
 
-mudar_nome('novo_nome', lista)
+mudar_nome(lista)
 
