@@ -1,8 +1,6 @@
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.scatterlayout import ScatterLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy.uix.scatter import Scatter
 from kivy.uix.image import Image
 from kivy.uix.button import Button
 from kivy.uix.label import Label
@@ -162,12 +160,7 @@ class ExcluirDados(Screen, MixinComum):
         self.add_widget(self.box_excluir)
 
 
-class MixinRootWidget(object):
-    def uma_funcao(self):
-        pass
-
-
-class RootWidget(ScreenManager, MixinRootWidget):
+class RootWidget(ScreenManager):
     def __init__(self, **kwargs):
         super(RootWidget, self).__init__(**kwargs)
         
