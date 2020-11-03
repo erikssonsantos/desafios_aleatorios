@@ -197,7 +197,6 @@ class RootWidget(ScreenManager):
         
 
 class TestApp(App):
-    kv_directory = 'template_0'
     
     title = "Teste de Screen Manager"
 
