@@ -12,21 +12,27 @@ class MixinMenu(object):
     
     def to_cadastrar(self):
         self.parent.parent.current = 'cadastrar'
+        self.parent.parent.transition.direction = 'up'
     
     def to_buscar(self):
         self.parent.parent.current = 'buscar'
+        self.parent.parent.transition.direction = 'left'
     
     def to_devedores(self):
         self.parent.parent.current = 'todos_devedores'
+        self.parent.parent.transition.direction = 'down'
     
     def to_dividas(self):
         self.parent.parent.current = 'total_dividas'
+        self.parent.parent.transition.direction = 'right'
     
     def to_diminuir(self):
         self.parent.parent.current = 'diminuir_divida'
+        self.parent.parent.transition.direction = 'down'
     
     def to_excluir(self):
         self.parent.parent.current = 'excluir_dados'
+        self.parent.parent.transition.direction = 'left'
     
 
 class Menu(BoxLayout, MixinMenu):
@@ -61,6 +67,7 @@ class Menu(BoxLayout, MixinMenu):
 class MixinComum(object):
     def ir_para_menu(self):
         self.parent.parent.current = 'menu'
+        self.parent.parent.transition.direction = 'up'
 
 
 class Cadastrar(Screen, MixinComum):
