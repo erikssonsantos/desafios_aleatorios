@@ -8,9 +8,33 @@ from os import remove
 resultados = {}
 atualizacao = ""
 
+
+def get_dict_from_json():
+    import json
+    
+    dados = open("dictall.json", 'r', encoding="utf8")
+    all_conteudo = dados.read()
+    dados.close()
+    
+    return json.loads(all_conteudo)
+
+
+def atualiza_json():
+    import json
+    criar_dict_resultados()
+    dados = open("dictall.json", 'w', encoding="utf8") 
+    json.dump(resultados, dados, indent = 4, sort_keys = False) 
+    dados.close()
+
+
+resultados = get_dict_from_json()
+
+
+
 # cria dicionário personalizado a partir de arquivo local
 def criar_dict_resultados():
     
+    resultados.clear()
     i = 0
     concurso = 0
     data = ""
@@ -35,12 +59,16 @@ def criar_dict_resultados():
         
     dados.close()
 
+
 def verifica_se_dados_locais_estao_atualizados():
     if os.path.isfile("todos_resultados_txt.txt"):
         from datetime import datetime
         now = datetime.now()
-        criar_dict_resultados()
-        ultimo_concurso = max(resultados.keys())
+        keys = []
+        for i in resultados.keys():
+            keys.append(int(i))
+        ultimo_concurso = str(max(keys))
+        del keys
         
         dia_ultimo_concurso = re.search("(\d\d)", resultados[ultimo_concurso][0][0])
         dia_ultimo_concurso = dia_ultimo_concurso.group()
@@ -62,8 +90,15 @@ def verifica_se_dados_locais_estao_atualizados():
         c = mes_ultimo_concurso < now.month
         d = mes_ultimo_concurso == now.month
         e = dia_ultimo_concurso < now.day
-        
-        if a or (b and c) or (b and (d and e)):
+        f = now.hour > 20
+        g = now.minute > 30
+
+        z1 = a and (f and g)
+        z2 = (b and c) and (f and g)
+        z3 = (b and (d and e)) and (f and g)
+        z = z1 or z2 or z3
+
+        if z:
             import shutil
             source=r"todos_resultados_txt.txt"
             if os.path.isfile("todos_resultados_txt_bp.txt"):
@@ -95,10 +130,7 @@ def atualiza_dados_locais(caso=0):
         dados.close()
         
         # cópia json
-        import json
-        dados = open("dictall.json", "w") 
-        json.dump(resultados, dados, indent = 4, sort_keys = False) 
-        dados.close()
+        atualiza_json()
         
         atualizacao = "Atualizado"
     except:
@@ -144,29 +176,47 @@ def um_jogo_em_todos_resultados(numeros_jogados):
             break
 
 
+def vezes_numero(numero):
+    vezes = 0
+    for i in resultados.keys():
+        if numero in resultados[i][1]:
+            vezes += 1
+    
+    return vezes
 
 
-
-
-
-
-
-
+def rank_vezes():
+    rank = {}
+    
+    for i in range(1, 26):
+        rank[i] = vezes_numero(i)
+    
+    rank_temp = rank.copy()
+    value_list = list(rank.values())
+    value_list.sort(reverse=True)
+    
+    for i in value_list:
+    
+        for k, v in rank_temp.items():
+            if v == i:
+                rank[value_list.index(i) + 1] = [k, v]
+    
+    return rank
+        
 
 verifica_se_dados_locais_estao_atualizados()
-criar_dict_resultados()
+# print(vezes_numero(22))
+'''
+for k, v in rank_vezes().items():
+    print(f"{k}º -> {v}")
+'''
 # a = quantidade_acertos([2,3,4,5,6,7,8,10,13,17,18,19,20,21,24], int(max(resultados.keys())))
 # print(a)
+# jogo_bom = [2,3,4,5,6,7,8,10,13,17,18,19,20,21,24]
+# um_jogo_em_todos_resultados([10, 13, 24, 11, 25, 3, 23, 18, 5, 1, 19, 2, 14, 4, 20])
+
+# print(get_dict_from_json())
+
 um_jogo_em_todos_resultados([2,3,4,5,6,7,8,10,13,17,18,19,20,21,24])
 
-
 print(f"\n\n{atualizacao}")
-
-
-'''
-import json
-dados = open("dictall.json", "w") 
-json.dump(resultados, dados, indent = 4, sort_keys = False) 
-dados.close()
-'''
-
