@@ -15,7 +15,7 @@ from os import getcwd as aqui
 from os import rename as renomear
 from os import stat
 from os.path import isfile
-from time import sleep
+# from time import sleep
 
 
 pasta_alvo = None  # None = pasta atual

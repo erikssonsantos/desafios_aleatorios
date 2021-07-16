@@ -15,3 +15,4 @@ class AddProjectPath:
         else:
             caminho = caminho_alvo
             path.insert(0, caminho)
+
