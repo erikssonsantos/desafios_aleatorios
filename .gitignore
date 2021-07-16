@@ -123,3 +123,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# ignores personalizados
+
+.idea/
+*.json
