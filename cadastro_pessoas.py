@@ -1,6 +1,6 @@
 import json
 import re
-from dateutil.relativedelta import *
+from dateutil.relativedelta import relativedelta
 from datetime import date
 from os import path
 
